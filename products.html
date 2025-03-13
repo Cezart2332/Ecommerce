@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="src/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header class="flex p-2 text-center content-center justify-between items-center w-full bg-white">
+        <div class="flex space-x-10 px-10">
+            <a href="index.html" class="flex text-3xl font-bold">Digital Store</a>
+            <input type="text" class="px-10 py-2 border-2 border-blue-500 rounded-tl-lg rounded-br-lg opacity-50" placeholder="Search something here">
+            <a href="" class="text-lg te"><i class="fas fa-search -translate-x-18 translate-y-2"></i></a>
+        </div>
+        <div class="flex px-10 space-x-10">
+            <a href="" class="text-xl font-semibold space-x-2"><i class="fa-solid fa-cart-shopping"></i>Cart</a>
+            <a href="register.html" class="text-xl font-semibold space-x-2" id="account"><i class="fa-solid fa-circle-user"></i></i>Account</a>
+        </div>
+    </header>
+    <section class="flex p-5 text-center bg-sky-400">
+        <ol class="flex space-x-10 px-20">
+          <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Products</a></li>
+            <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Sales</a></li>
+            <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="" >About Us</a></li>
+            <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="" >Contact</a></li>
+            <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Help</a></li>
+        </ol>
+    </section>
+    <section class="h-200 w-50 fixed">
+        <div class="flex flex-col text-black mt-4 space-y-3">
+            <div class="flex space-x-2 justify-center items-center">
+                <input id="stock" type="checkbox" class="w-4 h-4">
+                <h1 class="text-lg">In stock</h1>
+            </div>
+            <div class="flex space-x-2 justify-center items-center">
+                <input id="sale" type="checkbox" class="w-4 h-4">
+                <h1 class="text-lg">On sale</h1>
+            </div>
+            <h1 class="text-lg text-center">Price Range:</h1>
+            <div class="flex flex-row space-x-2 justify-center items-center">
+                <input id="default-checkbox" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
+                <p>-</p>
+                <input id="default-checkbox" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
+            </div>
+            <h1 class="text-lg text-center">Rating:</h1>
+            <div class="flex flex-row space-x-2 justify-center items-center">
+                <input id="default-checkbox" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
+                <p>-</p>
+                <input id="default-checkbox" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
+            </div>
+        </div>
+    </section>
+    <section class="grid grid-cols-4 grid-rows-3 ml-64 mt-10 gap-7">
+        <div class="bg-black/20 shadow-lg shadow-black/40 w-50 h-80 rounded-3xl text-white">
+            <div class="flex bg-amber-200 w-7 h-7 rounded-4xl translate-x-2 translate-y-4 items-center justify-center content-center    ">
+                <a href=""><i class="fa-solid fa-thumbs-up h-4 w-4 "></i></a>
+            </div>
+            <img src="img/iphone15.png" alt="" class="w-60 h-40 object-contain">
+            <h1 class="text-center mt-3 text-xl font-semibold">Iphone 15 PRO MAX </h1>
+            <div class="flex flex-col justify-center items-center">
+                <p class="text-lg font-semibold">Pret:3000 de lei</p>
+                <button class="bg-amber-600 rounded-lg p-1 mt-3 px-2 cursor-pointer transition-all duration-400 hover:bg-amber-600/30 ">Adauga in cos</button>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="index.js"></script>
+</body>
+</html>

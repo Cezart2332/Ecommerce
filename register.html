@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="src/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header class="flex p-2 text-center content-center justify-between items-center w-full bg-white">
+        <div class="flex space-x-10 px-10">
+            <a href="index.html" class="flex text-3xl font-bold">Digital Store</a>
+            <input type="text" class="px-10 py-2 border-2 border-blue-500 rounded-tl-lg rounded-br-lg opacity-50" placeholder="Search something here">
+            <a href="" class="text-lg te"><i class="fas fa-search -translate-x-18 translate-y-2"></i></a>
+        </div>
+        <div class="flex px-10 space-x-10">
+            <a href="" class="text-xl font-semibold space-x-2"><i class="fa-solid fa-cart-shopping"></i>Cart</a>
+            <a href="register.html" class="text-xl font-semibold space-x-2"><i class="fa-solid fa-circle-user"></i></i>Account</a>
+        </div>
+    </header>
+    <section class="flex p-5 text-center bg-sky-400">
+        <ol class="flex space-x-10 px-20">
+          <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Products</a></li>
+            <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Sales</a></li>
+            <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="" >About Us</a></li>
+            <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="" >Contact</a></li>
+            <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Help</a></li>
+        </ol>
+    </section>
+    <section class="flex p-5 justify-center">
+        <div class="p-15  rounded-xl">
+            <h1 class="text-center font-bold text-2xl mb-2">Register:</h1>
+            <h1>First Name:</h1>
+            <input type="text" name="firstName" id="firstName" class="p-2 px-5 w-100 bg-gray-800 text-gray-100 outline-none rounded-lg focus:bg-gray-500">
+            <h1>Last Name:</h1>
+            <input type="text" name="lastName" id="lastName" class="p-2 px-5 w-100  bg-gray-800 text-gray-100 outline-none rounded-lg  focus:bg-gray-500">
+            <h1>Email:</h1>
+            <input type="text" name="email" id="email" class="p-2 px-5 w-100  bg-gray-800 text-gray-100 outline-none rounded-lg  focus:bg-gray-500">
+            <h1>Password:</h1>
+            <input type="password" name="password" id="password" class="p-2 px-5 w-100  bg-gray-800 text-gray-100 outline-none rounded-lg  focus:bg-gray-500 border-2">
+            <h1 class="text-lg">Already have an account? <a href="login.html" class="font-semibold underline">Sign in here</a></h1>
+            <button class="w-100 p-1 rounded-lg mt-1 text-lg bg-gradient-to-r from-sky-600 to-purple-900 text-white font-normal transition-all duration-500 hover:translate-x-3 hover:opacity-50 cursor-pointer" onclick="registerClient()">REGISTER</button>
+        </div>
+    </section>
+    <script src="register.js"></script>
+</body>
+</html>
