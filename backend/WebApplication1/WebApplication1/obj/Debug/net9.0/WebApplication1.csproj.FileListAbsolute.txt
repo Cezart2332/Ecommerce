@@ -50,3 +50,4 @@ C:\Users\Cezar\Desktop\Ecommerce\backend\WebApplication1\WebApplication1\obj\Deb
 C:\Users\Cezar\Desktop\Ecommerce\backend\WebApplication1\WebApplication1\obj\Debug\net9.0\ref\WebApplication1.dll
 C:\Users\Cezar\Desktop\Ecommerce\backend\WebApplication1\WebApplication1\bin\Debug\net9.0\DevOne.Security.Cryptography.BCrypt.dll
 C:\Users\Cezar\Desktop\Ecommerce\backend\WebApplication1\WebApplication1\bin\Debug\net9.0\BCrypt.Net.dll
+C:\Users\Cezar\Desktop\Ecommerce\backend\WebApplication1\WebApplication1\obj\Debug\net9.0\WebApplication1.sourcelink.json

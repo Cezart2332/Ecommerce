@@ -14,7 +14,11 @@
             <input type="text" class="px-10 py-2 border-2 border-blue-500 rounded-tl-lg rounded-br-lg opacity-50" placeholder="Search something here">
             <a href="" class="text-lg te"><i class="fas fa-search -translate-x-18 translate-y-2"></i></a>
         </div>
-        <div class="flex px-10 space-x-10">
+        <div class="flex px-10 space-x-10 items-center">
+            <div class="flex">
+              <a href=""><i class="fa-solid fa-heart text-2xl"></i></a>
+              <div class="rounded-full -translate-y-3 -translate-x-2.5 bg-red-800 p-0.5 text-center"><p class="text-">20</p></div>
+            </div>
             <a href="" class="text-xl font-semibold space-x-2"><i class="fa-solid fa-cart-shopping"></i>Cart</a>
             <a href="register.html" class="text-xl font-semibold space-x-2" id="account"><i class="fa-solid fa-circle-user"></i></i>Account</a>
         </div>
@@ -52,7 +56,7 @@
             </div>
         </div>
     </section>
-    <section class="grid grid-cols-4 grid-rows-3 ml-64 mt-10 gap-7">
+    <section class="grid grid-cols-4 grid-rows-3 ml-64 mt-10 gap-7" id="products">
         <div class="bg-black/20 shadow-lg shadow-black/40 w-50 h-80 rounded-3xl text-white">
             <div class="flex bg-amber-200 w-7 h-7 rounded-4xl translate-x-2 translate-y-4 items-center justify-center content-center    ">
                 <a href=""><i class="fa-solid fa-thumbs-up h-4 w-4 "></i></a>
@@ -68,5 +72,6 @@
     </section>
 
     <script src="index.js"></script>
+    <script src="product.js"></script>
 </body>
 </html>

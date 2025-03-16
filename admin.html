@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
     <link rel="stylesheet" href="src/output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+
 </head>
 <body>
     <header class="flex p-2 text-center content-center justify-between items-center w-full bg-white">
@@ -25,24 +26,23 @@
     </header>
     <section class="flex p-5 text-center bg-sky-400">
         <ol class="flex space-x-10 px-20">
-          <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Products</a></li>
+          <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="products.html">Products</a></li>
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Sales</a></li>
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="" >About Us</a></li>
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="" >Contact</a></li>
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Help</a></li>
         </ol>
     </section>
-    <section class="flex p-5 justify-center">
-        <div class="p-15  rounded-xl">
-            <h1 class="text-center font-bold text-2xl mb-2">Login:</h1>
-            <h1>Email:</h1>
-            <input type="text" name="email" id="email" class="p-2 px-5 w-100  bg-gray-800 text-gray-100 outline-none rounded-lg  focus:bg-gray-500 ">
-            <h1>Password:</h1>
-            <input type="password" name="password" id="password" class="p-2 px-5 w-100  bg-gray-800 text-gray-100 outline-none rounded-lg  focus:bg-gray-500">
-            <h1 class="text-lg">Don't have an account? <a href="register.html" class="font-semibold underline">Sign up here</a></h1>
-            <button class="w-100 p-1 rounded-lg mt-1 text-lg bg-gradient-to-r from-sky-600 to-purple-900 text-white font-normal transition-all duration-500 hover:translate-x-3 hover:opacity-50 cursor-pointer" onclick="loginClient()">LOGIN</button>
-        </div>
-    </section>
-    <script src="register.js"></script>
+    <div class="flex flex-col space-y-10 mt-3 text-white ">
+        <input type="text" id="productName" class="bg-black">
+        <input type="text" id="productDescription" class="bg-black">
+        <input type="text" id="price" class="bg-black">
+        <input type="file" id="image" class="bg-black">
+        <input type="text" id="category" class="bg-black">
+        <button class="p-2 bg-blue-500" onclick="uploadProduct()">Upload</button>
+    </div>
+
+    <script src="index.js"></script>
+    <script src="admin.js"></script>
 </body>
 </html>
