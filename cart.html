@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Document</title>
     <link rel="stylesheet" href="src/output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -25,28 +25,46 @@
     </header>
     <section class="flex p-5 text-center bg-sky-400">
         <ol class="flex space-x-10 px-20">
-          <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Products</a></li>
+          <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="products.html">Products</a></li>
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Sales</a></li>
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="" >About Us</a></li>
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="" >Contact</a></li>
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Help</a></li>
         </ol>
     </section>
-    <section class="flex p-5 justify-center">
-        <div class="p-15  rounded-xl">
-            <h1 class="text-center font-bold text-2xl mb-2">Register:</h1>
-            <h1>First Name:</h1>
-            <input type="text" name="firstName" id="firstName" class="p-2 px-5 w-100 bg-gray-800 text-gray-100 outline-none rounded-lg focus:bg-gray-500">
-            <h1>Last Name:</h1>
-            <input type="text" name="lastName" id="lastName" class="p-2 px-5 w-100  bg-gray-800 text-gray-100 outline-none rounded-lg  focus:bg-gray-500">
-            <h1>Email:</h1>
-            <input type="text" name="email" id="email" class="p-2 px-5 w-100  bg-gray-800 text-gray-100 outline-none rounded-lg  focus:bg-gray-500">
-            <h1>Password:</h1>
-            <input type="password" name="password" id="password" class="p-2 px-5 w-100  bg-gray-800 text-gray-100 outline-none rounded-lg  focus:bg-gray-500 border-2">
-            <h1 class="text-lg">Already have an account? <a href="login.html" class="font-semibold underline">Sign in here</a></h1>
-            <button class="w-100 p-1 rounded-lg mt-1 text-lg bg-gradient-to-r from-sky-600 to-purple-900 text-white font-normal transition-all duration-500 hover:translate-x-3 hover:opacity-50 cursor-pointer" onclick="registerClient()">REGISTER</button>
+    <section class="mx-30 mt-5">
+        <h1 class="text-2xl font-bold">My cart:</h1>
+        <div class="flex flex-row bg-sky-200 space-3 justify-around">
+            <div class="flex flex-col space-y-2 mt-4">
+                <div class="flex flex-row text-center items-center content-center bg-white rounded-lg mx-5 py-1 space-x-5">
+                    <img src="img/iphone15.png" alt="" class="h-20 w-20 object-contain">
+                    <h1 class="text-lg font-semibold">Iphone 15 Pro Max</h1>
+                    <div class="flex flex-col">
+                        <p>Quantity:</p>
+                        <div class="flex text-lg border-1 border-black/50 rounded-lg space-x-3 text-center items-center content-center">
+                            <p>0</p>
+                            <div class="flex space-x-2 text-center">
+                                <button>-</button>
+                                <p>|</p>
+                                <button class="p-0.5">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p>Pret: 4000 RON</p>
+                </div>
+            </div>
+            <div class=" flex flex-col mt-3 items-center content-center mb-3">
+                <button class="bg-gray-700 rounded-lg text-white text-lg p-0.5 w-30 h-10">Next Step</button>
+                <div class="flex flex-col bg-red-800 p-5 rounded-xl text-white text-xl font-semibold mt-3">
+                    <h1>Summary</h1>
+                    <hr class="h-px  bg-black/50 border-0 my-1">
+                    <p class="text-lg">You need to pay: 4000RON</p>
+                </div>
+
+            </div>
+            
         </div>
     </section>
-    <script src="register.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>

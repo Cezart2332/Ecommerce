@@ -53,13 +53,25 @@ namespace WebApplication2
             {
                 throw new ArgumentNullException(nameof(client));
             }
-            string query = "INSERT into users(first_name, last_name, email,password) VALUES(@first_name, @last_name, @email, @password)";
+            string query = "SELECT email FROM users";
             MySqlCommand cmd = new MySqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@first_name", client.firstName);
-            cmd.Parameters.AddWithValue("@last_name", client.lastName);
-            cmd.Parameters.AddWithValue("@email", client.email);
-            cmd.Parameters.AddWithValue("@password", BCrypt.Net.BCrypt.HashPassword(client.password, 13));
-            int l = cmd.ExecuteNonQuery();
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    if (client.email == reader["email"].ToString())
+                    {
+                        return Unauthorized("Exista un utilizator cu aceasta adresa de email!");
+                    }
+                }
+            }
+            string query1 = "INSERT into users(first_name, last_name, email,password) VALUES(@first_name, @last_name, @email, @password)";
+            MySqlCommand cmd1 = new MySqlCommand(query1, conn);
+            cmd1.Parameters.AddWithValue("@first_name", client.firstName);
+            cmd1.Parameters.AddWithValue("@last_name", client.lastName);
+            cmd1.Parameters.AddWithValue("@email", client.email);
+            cmd1.Parameters.AddWithValue("@password", BCrypt.Net.BCrypt.HashPassword(client.password, 13));
+            int l = cmd1.ExecuteNonQuery();
             conn.Close();
             return Ok(client);
         }
@@ -125,8 +137,48 @@ namespace WebApplication2
             }
             return Ok(products);
         }
+
+        [HttpPost("cart")]
+        public IActionResult AddToCart([FromForm] ProductAndClient pac)
+        {
+            int clientId = 0;
+            int productId = 0;
+            MySqlConnection conn = Connection.GetConn();
+            conn.Open();
+            string query = "SELECT id FROM users WHERE email = @email";
+            MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@email", pac.clientEmail);
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                { 
+                    clientId = reader.GetInt32("id");
+                }
+            }
+            string query1 = "SELECT id FROM products WHERE product_name = @product_name";
+            MySqlCommand cmd1 = new MySqlCommand(query1, conn);
+            cmd1.Parameters.AddWithValue("@product_name", pac.productName);
+            using (MySqlDataReader reader = cmd1.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    productId = reader.GetInt32("id");
+                }
+            }
+            string query2 = @"INSERT INTO shopping_cart(user_id, product_id, quantity)
+                  VALUES(@user_id, @product_id, @quantity)
+                  ON DUPLICATE KEY UPDATE quantity = quantity + @quantity";
+            MySqlCommand cmd2 = new MySqlCommand(query2, conn);
+            cmd2.Parameters.AddWithValue("@user_id", clientId);
+            cmd2.Parameters.AddWithValue("@product_id", productId);
+            cmd2.Parameters.AddWithValue("@quantity", pac.quantity);
+            int l = cmd2.ExecuteNonQuery();
+            conn.Close();
+            return Ok(new { message = "Produsul a fost adaugat in cos cu succes!" });
+        }
+        
         [HttpPost("upload")]
-        public async Task<IActionResult> upload([FromForm] ProductUpload productUpload)
+        public async Task<IActionResult> Upload([FromForm] ProductUpload productUpload)
         {
             MySqlConnection conn = Connection.GetConn();
             conn.Open();
@@ -187,6 +239,13 @@ namespace WebApplication2
         public string price { get; set; }
         public IFormFile image { get; set; }
         public string category { get; set; }
+    }
+
+    public class ProductAndClient
+    {
+        public string clientEmail { get; set; }
+        public string productName { get; set; }
+        public int quantity { get; set; }
     }
 
 }

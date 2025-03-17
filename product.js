@@ -21,16 +21,22 @@ async function loadProducts()
 }
 loadProducts()
 
-const savedProducts = JSON.parse(localStorage.getItem("savedProcuts")) || []
-
-function addCart(index){
-    const isAlreadyInCart = savedProducts.some(
-        (savedProduct) => savedProduct.productName === products[index].productName
-    )
-    if(isAlreadyInCart){
-        return alert("Acest produs este deja in cos!")
+async function addCart(index){
+    let client = JSON.parse(localStorage.getItem("client"))
+    const formData = new FormData();
+    formData.append("clientEmail",client.email)
+    formData.append("productName",products[index].productName)
+    formData.append("quantity",1);
+    console.log(client.email)
+    const response = await fetch("http://localhost:5247/api/products/cart",{
+        method: "POST",
+        body: formData,
+    })
+    try{
+        if(!response.ok) throw new Error("Eroare la incarcare")
+        const data = await response.json()
+        console.log(`Succes: ${data}`)
+    }catch(error){
+        console.log(`Eroare: ${error}`)
     }
-    savedProducts.push(products[index])
-    localStorage.setItem("savedProducts", savedProducts)
-    return alert("Ai adaugat cu succes un produs nou!")
 }
