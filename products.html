@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="src/output.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -25,8 +26,15 @@
     </header>
     <section class="flex p-5 text-center bg-sky-400">
         <ol class="flex space-x-10 px-20">
-          <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Products</a></li>
-            <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Sales</a></li>
+            <div class="hs-dropdown">
+                <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500 "> <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" data-dropdown-delay="200" class="hs-dropdown-default"><a>Products</a></button></li>
+                <ul id="dropdownHover" class="hidden absolute left-15 bottom-141 bg-blue-900 rounded-lg font-semibold text-lg p-3 z-1000">
+                  <li class="transition-all duration-400 hover:bg-white/30 rounded-lg cursor-pointer"><a href="products.html?category=Phones">Phones</a></li>
+                  <li class="transition-all duration-400 hover:bg-white/30 rounded-lg cursor-pointer"><a href="products.html?category=PC">PC's and components</a></li>
+                  <li class="transition-all duration-400 hover:bg-white/30 rounded-lg cursor-pointer"><a href="products.html?category=Music">Headsets and speakers</a></li>
+                </ul>
+              </div>
+
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="" >About Us</a></li>
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="" >Contact</a></li>
             <li class="text-xl font-semibold  transition-all duration-450 hover:-translate-y-2 hover:text-red-500"><a href="">Help</a></li>
@@ -38,26 +46,23 @@
                 <input id="stock" type="checkbox" class="w-4 h-4">
                 <h1 class="text-lg">In stock</h1>
             </div>
-            <div class="flex space-x-2 justify-center items-center">
-                <input id="sale" type="checkbox" class="w-4 h-4">
-                <h1 class="text-lg">On sale</h1>
-            </div>
             <h1 class="text-lg text-center">Price Range:</h1>
             <div class="flex flex-row space-x-2 justify-center items-center">
-                <input id="default-checkbox" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
+                <input id="lower-price" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
                 <p>-</p>
-                <input id="default-checkbox" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
+                <input id="higher-price" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
             </div>
             <h1 class="text-lg text-center">Rating:</h1>
             <div class="flex flex-row space-x-2 justify-center items-center">
-                <input id="default-checkbox" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
+                <input id="lower-rating" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
                 <p>-</p>
-                <input id="default-checkbox" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
+                <input id="higher-rating" type="text" class="w-20 h-6 bg-gray-800 rounded-sm text-white">
             </div>
+            <button class="bg-sky-800 rounded-lg w-30 mx-auto p-0.5 text-white font-semibold text-md cursor-pointer transition-all duration-400 hover:bg-sky-800/50" onclick="filterProducts()">Apply</button>
         </div>
     </section>
     <section class="grid grid-cols-4 grid-rows-3 ml-64 mt-10 gap-7" id="products">
-        <div class="bg-black/20 shadow-lg shadow-black/40 w-50 h-80 rounded-3xl text-white">
+        <div class="bg-black/30 shadow-lg shadow-black/20 w-50 rounded-3xl text-white pb-2">
             <div class="flex bg-amber-200 w-7 h-7 rounded-4xl translate-x-2 translate-y-4 items-center justify-center content-center    ">
                 <a href=""><i class="fa-solid fa-thumbs-up h-4 w-4 "></i></a>
             </div>
@@ -65,13 +70,15 @@
             <h1 class="text-center mt-3 text-xl font-semibold">Iphone 15 PRO MAX </h1>
             <div class="flex flex-col justify-center items-center">
                 <p class="text-lg font-semibold">Pret:3000 de lei</p>
+                <p class="text-sm font-semibold text-gray-300">Rating: 0</p>
+                <p class="text-md font-semibold">Stock: 10</p>
                 <button class="bg-amber-600 rounded-lg p-1 mt-3 px-2 cursor-pointer transition-all duration-400 hover:bg-amber-600/30 ">Adauga in cos</button>
             </div>
-
         </div>
     </section>
 
     <script src="index.js"></script>
     <script src="product.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 </html>

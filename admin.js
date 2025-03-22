@@ -10,6 +10,7 @@ async function uploadProduct(){
     formData.append("price", document.getElementById("price").value)
     formData.append("image", file)
     formData.append("category", document.getElementById("category").value)
+    formData.append("category", document.getElementById("stock").value)
     const response = await fetch("http://localhost:5247/api/products/upload",{
         method: "POST",
         body: formData,

@@ -1,14 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using BCrypt.Net;
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Crypto.Generators;
-using BCrypt;
-using Microsoft.AspNetCore.Identity.Data;
-using Mysqlx;
+
 using WebApplication1;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// Configurăm CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -128,13 +120,16 @@ namespace WebApplication2
                     string productName = reader["product_name"].ToString();
                     string productDescription = reader["description"].ToString();
                     string price = reader["price"].ToString();
-                    string catergory = reader["category"].ToString();
+                    string category = reader["category"].ToString();
                     byte[] byteImage = (byte[])reader["product_image"];
+                    string stock = reader["stock"].ToString();
+                    string rating = reader["rating"].ToString();
                     string image = Convert.ToBase64String(byteImage);
-                    var product = new Product(productName, productDescription, price, image,catergory);
+                    var product = new Product(productName, productDescription, price, image, category,rating,stock);
                     products.Add(product);
                 }
             }
+
             return Ok(products);
         }
 
@@ -151,10 +146,11 @@ namespace WebApplication2
             using (MySqlDataReader reader = cmd.ExecuteReader())
             {
                 if (reader.Read())
-                { 
+                {
                     clientId = reader.GetInt32("id");
                 }
             }
+
             string query1 = "SELECT id FROM products WHERE product_name = @product_name";
             MySqlCommand cmd1 = new MySqlCommand(query1, conn);
             cmd1.Parameters.AddWithValue("@product_name", pac.productName);
@@ -165,6 +161,7 @@ namespace WebApplication2
                     productId = reader.GetInt32("id");
                 }
             }
+
             string query2 = @"INSERT INTO shopping_cart(user_id, product_id, quantity)
                   VALUES(@user_id, @product_id, @quantity)
                   ON DUPLICATE KEY UPDATE quantity = quantity + @quantity";
@@ -176,8 +173,108 @@ namespace WebApplication2
             conn.Close();
             return Ok(new { message = "Produsul a fost adaugat in cos cu succes!" });
         }
-        
-        [HttpPost("upload")]
+
+        [HttpPost("cartelements")]
+        public IActionResult GetCartElememts([FromForm] string email)
+        {
+            int clientId = 0;
+            MySqlConnection conn = Connection.GetConn();
+            conn.Open();
+            var products = new List<ProductCart>();
+            string query = "SELECT id FROM users WHERE email = @email";
+            MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@email", email);
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    clientId = reader.GetInt32("id");
+                }
+            }
+
+            if (clientId == 0)
+            {
+                conn.Close();
+                return BadRequest(new { message = "Utilizatorul nu a fost găsit." });
+            }
+
+            string query1 =
+                "SELECT p.*, sc.quantity FROM shopping_cart sc JOIN products p ON sc.product_id = p.id WHERE user_id = @user_id";
+            MySqlCommand cmd1 = new MySqlCommand(query1, conn);
+            cmd1.Parameters.AddWithValue("@user_id", clientId);
+            using (MySqlDataReader reader = cmd1.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    string productName = reader["product_name"].ToString();
+                    string productDescription = reader["description"].ToString();
+                    string price = reader["price"].ToString();
+                    string catergory = reader["category"].ToString();
+                    int quantity = reader.GetInt32("quantity");
+                    byte[] byteImage = (byte[])reader["product_image"];
+                    string image = Convert.ToBase64String(byteImage);
+                    var product = new ProductCart(productName, productDescription, price, image, catergory, quantity);
+                    products.Add(product);
+                }
+            }
+
+            conn.Close();
+            return Ok(products);
+        }
+
+        [HttpPost("changequantity")]
+        public IActionResult UpdateQuantity([FromForm] ProductAndClient pac)
+        {
+            MySqlConnection conn = Connection.GetConn();
+            conn.Open();
+            int clientId = 0;
+            int productId = 0;
+            string query = "SELECT id FROM users WHERE email = @email";
+            MySqlCommand cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@email", pac.clientEmail);
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    clientId = reader.GetInt32("id");
+                }
+            }
+            string query1 = "SElECT id FROM products WHERE product_name = @product_name";
+            MySqlCommand cmd1 = new MySqlCommand(query1, conn);
+            cmd1.Parameters.AddWithValue("@product_name", pac.productName);
+            using (MySqlDataReader reader = cmd1.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    productId = reader.GetInt32("id");
+                }
+            }
+
+            if (pac.quantity > 0)
+            {
+                string query2 = "UPDATE shopping_cart SET quantity = @quantity WHERE user_id = @user_id AND product_id = @product_id";
+                MySqlCommand cmd2 = new MySqlCommand(query2, conn);
+                cmd2.Parameters.AddWithValue("@user_id", clientId);
+                cmd2.Parameters.AddWithValue("@product_id", productId);
+                cmd2.Parameters.AddWithValue("@quantity", pac.quantity);
+                int l = cmd2.ExecuteNonQuery();
+            }
+
+            if (pac.quantity == 0)
+            {
+                string query3 = "DELETE FROM shopping_cart  WHERE user_id = @user_id AND product_id = @product_id";
+                MySqlCommand cmd3 = new MySqlCommand(query3, conn);
+                cmd3.Parameters.AddWithValue("@user_id", clientId);
+                cmd3.Parameters.AddWithValue("@product_id", productId);
+                cmd3.Parameters.AddWithValue("@quantity", pac.quantity);
+                int l = cmd3.ExecuteNonQuery();
+            }
+            conn.Close();
+            return Ok(505);
+        }
+    
+
+    [HttpPost("upload")]
         public async Task<IActionResult> Upload([FromForm] ProductUpload productUpload)
         {
             MySqlConnection conn = Connection.GetConn();
@@ -186,13 +283,15 @@ namespace WebApplication2
             await productUpload.image.CopyToAsync(memoryStream);
             byte[] image = memoryStream.ToArray();
             
-            string query = "INSERT into products(product_name, description, price,product_image,category) VALUES(@product_name, @description, @price, @product_image,@category)";
+            string query = "INSERT into products(product_name, description, price,product_image,,rating,stock) VALUES(@product_name, @description, @price, @product_image,@category)";
             MySqlCommand cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@product_name", productUpload.productName);
             cmd.Parameters.AddWithValue("@description", productUpload.productDescription);
             cmd.Parameters.AddWithValue("@price", productUpload.price);
             cmd.Parameters.AddWithValue("@product_image", image);
             cmd.Parameters.AddWithValue("@category", productUpload.category);
+            cmd.Parameters.AddWithValue("@rating", 0);
+            cmd.Parameters.AddWithValue("@stock", productUpload.stock);
             
             int l = cmd.ExecuteNonQuery();
             return Ok(new { message = "Produsul a fost incarcat cu succes!" });
@@ -221,14 +320,39 @@ namespace WebApplication2
         public string price { get; set; }
         public string productImage { get; set; }
         public string category { get; set; }
+        
+        public string rating { get; set; }
+        
+        public string stock { get; set; }
 
-        public Product(string productName, string productDescription, string price, string productImage,string category)
+        public Product(string productName, string productDescription, string price, string productImage,string category, string rating,string stock)
         {
             this.productName = productName;
             this.productDescription = productDescription;
             this.price = price;
             this.productImage = productImage;
             this.category = category;
+            this.rating = rating;
+            this.stock = stock;
+        }
+    }
+    public class ProductCart
+    {
+        public string productName { get; set; }
+        public string productDescription { get; set; }
+        public string price { get; set; }
+        public string productImage { get; set; }
+        public string category { get; set; }
+        public int quantity { get; set; }
+
+        public ProductCart(string productName, string productDescription, string price, string productImage,string category,int quantity)
+        {
+            this.productName = productName;
+            this.productDescription = productDescription;
+            this.price = price;
+            this.productImage = productImage;
+            this.category = category;
+            this.quantity = quantity;
         }
     }
 
@@ -239,6 +363,10 @@ namespace WebApplication2
         public string price { get; set; }
         public IFormFile image { get; set; }
         public string category { get; set; }
+        
+        public string rating { get; set; }
+        
+        public string stock { get; set; }
     }
 
     public class ProductAndClient
